@@ -1,0 +1,38 @@
+def change_same_mean(df,column):
+    i=0
+    while i<len(df):
+        b=0
+        while b<len(df):
+            if b == i:
+                b += 1
+                continue
+            else:
+                k=len(list(set(df.index[i].upper().split(',')[0].replace(' ',''))-set(df.index[b].upper().split(',')[0].replace(' ',''))))
+                l=len(list(set(df.index[b].upper().split(',')[0].replace(' ',''))-set(df.index[i].upper().split(',')[0].replace(' ',''))))
+                if k<=1 and l<=1:
+                    new_value=df.loc[df.index[b],column]+df.loc[df.index[i],column]
+                    if df.loc[df.index[i],column]>=df.loc[df.index[b],column]:
+                        df.loc[df.index[i],column]=new_value
+                        df.drop(df.index[b],inplace=True)
+                        b += 1
+                        break
+                    else:
+                        df.loc[df.index[b],column]=new_value
+                        df.drop(df.index[i],inplace=True)
+                        b += 1
+                        break
+                else:
+                    b+=1
+
+        i+=1
+                
+    ## than advice to run same() function.
+    
+    def same(df):
+      for i in range(10):
+          k=len(df)
+          change_same_mean(df,'Count')
+          if k==len(df):
+              break
+        
+    
